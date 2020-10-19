@@ -419,8 +419,8 @@ class Manager implements IManager {
 			$date->setTime(0, 0, 0);
 			$date->add(new \DateInterval('P' . $this->shareApiInternalDefaultExpireDays() . 'D'));
 			if ($date < $expirationDate) {
-				$message = $this->l->t('Can’t set expiration date more than %s days in the future', [$this->shareApiInternalDefaultExpireDays()]);
-				throw new GenericShareException($message, $message, 404);
+				$expirationDate = $date;
+				$this->logger->warning('Forced the expiration to ' . $this->shareApiLinkDefaultExpireDays() . ' days.', ['app' => 'share']);
 			}
 		}
 
